@@ -128,11 +128,11 @@ $ cat /usr/share/dict/words | tail -30
 We used a pipe in two examples just above, so I'll explain it briefly.
 The pipe operator takes the output (on stdout) of the command on the left and makes it the input (stdin) of the command on the right.
 
-So in this example:
+Example: Print the first 30 lines of a file:
 ```
 $ cat /usr/share/dict/words | head -30
 ```
-the `cat` command writes the contents of the file `/usr/share/dict/words` to stdout, the pipe connects that to stdin of the `head` command, which then prints the first 100 lines of stdin.
+Here, the `cat` command writes the contents of the file `/usr/share/dict/words` to stdout, the pipe connects that to stdin of the `head` command, which then prints the first 100 lines of stdin.
 
 Get comfortable with pipes.
 They're the command-connecting super-power that makes shell scripting a really fast way to write programs with non-trivial data processing logic.
@@ -140,12 +140,38 @@ They're the command-connecting super-power that makes shell scripting a really f
 
 ## Writing out to a file (`>`)
 
-TODO
+When a command is sending output to stdin, but you want it to be in a file, you can redirect the output using the `>` operator after the command.
+
+Example: Write the first 10 lines of one file to another file:
+```
+$ cat application.log | head -10 > startup_logs
+```
+This is commonly referred to as "redirecting the output" of a command.
+Note that, if the file already exists, this will _overwrite_ the file.
+
+
+## Appending output to a file (`>>`)
+
+If you want to redirect the output of a command to a file, but you want to _add_ the output to the _end_ of the file (instead of overwriting the entire file), you can use the `>>` operator.
+
+Example: Add the first 10 lines of a file to an existing file:
+```
+$ cat application_1.log | head -10 >> startup_logs
+```
+Note that this will create the file if it doesn't already exist.
 
 
 ## Reading in from a file (`<`)
 
-TODO
+Many commands read from stdin by default.
+Above we've seen that one way to get the contents of a file sent into the stdin of a command is to use the `cat` command and a pipe (`|`).
+
+We can do the same thing for a single file without using the `cat` command, by using the `<` operator _after_ the command.
+
+Example: Print the first 30 lines of a file:
+```
+$ head -30 < /usr/share/dict/words
+```
 
 
 ## less
